@@ -1,13 +1,7 @@
 const multer = require('multer');
 const SharpMulter = require('sharp-multer');
 
-// const MIME_TYPES = {
-//   'image/jpg': 'jpg',
-//   'image/jpeg': 'jpg',
-//   'image/png': 'png'
-// };
-
-// create file name
+// Création Filname
 const newFileName = (originalname, options) => {
     const name = originalname.split('.').slice(0, -1).join('.') +
     "-" + Date.now() +
@@ -15,7 +9,6 @@ const newFileName = (originalname, options) => {
     return name;
   };
 
-// where to store the documents
 const storage = SharpMulter ({
   destination: (req, file, callback) => {
     callback(null, 'images');
