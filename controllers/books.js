@@ -18,7 +18,8 @@ exports.createBook = (req, res, next) => {
     // sauvgarde du nouveau livre dans la base de données 
     book.save()
     .then(() => { res.status(201).json({message: 'Livre enregistré !'})})
-    .catch(error => {res.status(400).json({ error })})};
+    .catch(error => {res.status(400).json({ error })})
+};
 
 exports.modifyBook = (req, res, next) => {
     const bookObject = req.file ? {
@@ -27,7 +28,7 @@ exports.modifyBook = (req, res, next) => {
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
 
     } : { ...req.body };
-    delete bookObject._userId; // for security reasons
+    delete bookObject._userId;
     Book.findOne({_id: req.params.id})
         .then((book) => {
             if (book.userId != req.auth.userId) {
@@ -49,9 +50,9 @@ exports.modifyBook = (req, res, next) => {
         .catch((error) => {
             res.status(400).json({ error });
         });
- };
+};
 
- exports.deleteBook = (req, res, next) => {
+exports.deleteBook = (req, res, next) => {
     Book.findOne({ _id: req.params.id})
         .then(book => {
             if (book.userId != req.auth.userId) {
@@ -69,7 +70,7 @@ exports.modifyBook = (req, res, next) => {
         .catch( error => {
             res.status(500).json({ error });
         });
-    };
+};
 
 exports.getOneBook = (req, res, next) => {
     // Je récupère un livre avec l'id passé dans l'url
